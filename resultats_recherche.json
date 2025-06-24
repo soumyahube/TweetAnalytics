@@ -1,0 +1,22 @@
+{
+  "search_term": "happy",
+  "translated_term": "happy",
+  "total_tweets": 26164,
+  "date_analysis": "2025-06-20",
+  "sentiment_distribution": {
+    "positive": 75.67,
+    "neutral": 0.0,
+    "negative": 24.33
+  },
+  "top_tweets": {
+    "positive": [
+      "crazy day of school. there for 10 hours straiiight. about to watch the hills. @spencerpratt told me too! ha. happy birthday JB! ",
+      "happy to spend time with the family. "
+    ],
+    "negative": [
+      "@Viennah Yay! I'm happy for you with your job! But that also means less time for me and you... ",
+      "I'm missing you babe..  but as long as your alive I'm happy.. Yawwwnn.. I'm tired my love imma try to sleep hopefully you had a headstart"
+    ],
+    "neutre": []
+  }
+}
