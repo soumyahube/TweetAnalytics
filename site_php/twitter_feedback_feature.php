@@ -7,8 +7,8 @@ if (!class_exists('Mpdf\Mpdf')) {
 }
 
 // Chemins unifiés
-$json_file = "C:/Users/SOUMI/OneDrive/Bureau/xamp/htdocs/AppTweet/resultats_recherche.json";
-$image_file = "C:/Users/SOUMI/OneDrive/Bureau/xamp/htdocs/AppTweet/graphe_resulta.png";
+$json_file = "C:/wamp64/www/AppTweet/resultats_recherche.json";
+$image_file = "C:/wamp64/www/AppTweet/graphe/graphe_resulta.png";
 
 // Définir la page active
 $page = isset($_GET['page']) ? $_GET['page'] : 'accueil';
@@ -16,14 +16,14 @@ $page = isset($_GET['page']) ? $_GET['page'] : 'accueil';
 // Type de graphique par défaut et traitement du changement de type
 // Correction 1 : Chemin par défaut cohérent avec le type par défaut
 $graph_type = isset($_GET['graph_type']) ? $_GET['graph_type'] : 'bar';
-$image_file = "C:/Users/SOUMI/OneDrive/Bureau/xamp/htdocs/AppTweet/graphe_".$graph_type.".png";
+$image_file = "C:/wamp64/www/AppTweet/graphe/graphe_".$graph_type.".png";
 
 // Correction 2 : Charger les données AVANT de générer le graphique
 $data = file_exists($json_file) ? json_decode(file_get_contents($json_file), true) : null;
 
 // Correction 3 : Générer le graphique si les données existent
 if ($data !== null) {
-    require_once 'C:/Users/SOUMI/OneDrive/Bureau/xamp/htdocs/AppTweet/site_php/generate_graph.php';
+    require_once 'C:/wamp64/www/AppTweet/site_php/generate_graph.php';
     generateGraph($graph_type, $data);
 }
 // Traitement de soumission du feedback
@@ -35,7 +35,7 @@ if (isset($_POST['submit_feedback'])) {
     $feedback_rating = (int)($_POST['feedback_rating'] ?? '0');
     
     // Chemin du fichier pour stocker les feedbacks
-    $feedback_file = "C:/Users/SOUMI/OneDrive/Bureau/xamp/htdocs/AppTweet/feedbacks.json";
+    $feedback_file = "C:/wamp64/www/AppTweet/feedbacks.json";
     
     // Création d'un nouvel élément de feedback
     $new_feedback = [
@@ -697,11 +697,14 @@ $data = file_exists($json_file) ? json_decode(file_get_contents($json_file), tru
 
     <div class="navbar">
         <div class="navbar-container">
+             <!-- Bouton de retour vers l'interface Python 
+                <button onclick="launchPythonApp()" class="pdf-button" title="Retour à l'application">
+                  <i class="fas fa-arrow-left"></i>
+                </button> -->           
             <!-- Logo Twitter à gauche -->
             <div class="twitter-logo">
                 <i class="fab fa-twitter" style="color: white;"></i>
-            </div>
-            
+            </div>            
             <div class="nav-buttons">
                 <!-- Bouton de feedback avec l'icône de l'oiseau Twitter -->
                 <div class="feedback-menu-container">
@@ -916,14 +919,14 @@ document.addEventListener('DOMContentLoaded', function() {
     option.addEventListener('click', function() {
         // CONSERVEZ cette ligne qui ferme le menu
         graphMenu.classList.remove('show');
-        
+        const url = this.href;
         // AJOUTEZ cette ligne pour forcer le rechargement
         window.location.href = this.href;
     });
     });
 });
 <?php 
-$feedbacks = json_decode(file_get_contents('C:/Users/SOUMI/OneDrive/Bureau/xamp/htdocs/AppTweet/feedbacks.json'), true);
+$feedbacks = json_decode(file_get_contents('C:/wamp64/www/AppTweet/feedbacks.json'), true);
 $lastFeedback = end($feedbacks);
 ?>
 </script>
@@ -931,7 +934,7 @@ $lastFeedback = end($feedbacks);
 <script>
     // Vérifiez que le fichier feedbacks.json existe et est lisible
     <?php
-    $feedback_file = 'C:/Users/SOUMI/OneDrive/Bureau/xamp/htdocs/AppTweet/feedbacks.json';
+    $feedback_file = 'C:/wamp64/www/AppTweet/feedbacks.json';
     $feedbacks = file_exists($feedback_file) ? json_decode(file_get_contents($feedback_file), true) : [];
     $lastFeedback = !empty($feedbacks) ? end($feedbacks) : null;
     ?>
@@ -968,6 +971,25 @@ $lastFeedback = end($feedbacks);
     <?php else: ?>
         console.warn("Aucun feedback trouvé");
     <?php endif; ?>
+</script>
+
+<script>
+function launchPythonApp() {
+    if(confirm('Retourner à l\'application principale ?')) {
+        // Télécharger et exécuter le batch via PHP
+        fetch('launch_python.php')
+            .then(response => response.text())
+            .then(data => {
+                alert('Application relancée ! Vous pouvez fermer cet onglet.');
+                // Optionnel : fermer l'onglet après confirmation
+                // window.close();
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+                alert('L\'application va se rouvrir');
+            });
+    }
+}
 </script>
 </body>
 </html>

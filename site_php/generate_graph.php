@@ -1,18 +1,18 @@
 <?php
 function generateGraph($type, $data) {
     // Chemin de sortie
-   $outputDir = __DIR__ . '/graphe/';
+    $outputDir = __DIR__ . '/../graphe/';
 
-   // Crée le dossier s'il n'existe pas (avec droits d'écriture)
+    // Crée le dossier s'il n'existe pas (avec droits d'écriture)
     if (!is_dir($outputDir)) {
-     mkdir($outputDir, 0755, true); // 0755 pour éviter les problèmes de sécurité
+        mkdir($outputDir, 0755, true);
     }
 
     $outputFile = $outputDir . "graphe_" . $type . ".png";
     
     // Dimensions
     $width = 800;
-    $height =500;
+    $height = 500;
     
     // Création de l'image
     $image = imagecreatetruecolor($width, $height);
@@ -72,13 +72,13 @@ function generateGraph($type, $data) {
                 imageline($image, 100, $baseY, 700, $baseY, $black); // Axe X
                 imageline($image, 100, $baseY, 100, 100, $black);    // Axe Y
                 
-                // Barres
+                // Barres - CORRECTION : conversion en entiers
                 foreach (array_values($values) as $index => $value) {
                     $barHeight = ($value / 100) * $maxHeight;
-                    $x1 = $startX + ($index * 120); // Espacement réduit entre barres
-                    $y1 = $baseY - $barHeight;
-                    $x2 = $x1 + $barWidth;
-                    $y2 = $baseY;
+                    $x1 = (int)($startX + ($index * 120)); // Espacement réduit entre barres
+                    $y1 = (int)($baseY - $barHeight);      // CONVERSION EN ENTIER
+                    $x2 = (int)($x1 + $barWidth);
+                    $y2 = (int)$baseY;                     // CONVERSION EN ENTIER
                     
                     // Barre simple sans effet d'ombre
                     imagefilledrectangle($image, $x1, $y1, $x2, $y2, $barColors[$index]);
@@ -88,12 +88,15 @@ function generateGraph($type, $data) {
                     if (function_exists('imagettftext')) {
                         // Valeur au-dessus de la barre
                         $text = $value.'%';
-                        $textX = $x1 + ($barWidth/2) - 10;
-                        imagettftext($image, 10, 0, $textX, $y1 - 10, $black, $font, $text);
+                        $textX = (int)($x1 + ($barWidth/2) - 10); // CONVERSION EN ENTIER
+                        $textY = (int)($y1 - 10);                 // CONVERSION EN ENTIER
+                        imagettftext($image, 10, 0, $textX, $textY, $black, $font, $text);
                         
                         // Label en dessous
                         $label = ['Positive', 'Neutral', 'Negative'][$index];
-                        imagettftext($image, 10, 0, $x1 + 5, $baseY + 20, $black, $font, $label);
+                        $labelX = (int)($x1 + 5);                 // CONVERSION EN ENTIER
+                        $labelY = (int)($baseY + 20);             // CONVERSION EN ENTIER
+                        imagettftext($image, 10, 0, $labelX, $labelY, $black, $font, $label);
                     }
                 }
                 break;
@@ -101,8 +104,8 @@ function generateGraph($type, $data) {
             case 'pie':
             case 'ring':
                 // Camembert ou Anneau avec vos couleurs
-                $centerX = $width / 2;
-                $centerY = $height / 2;
+                $centerX = (int)($width / 2);
+                $centerY = (int)($height / 2);
                 $radius = 150;
                 $innerRadius = ($type === 'ring') ? 80 : 0;
                 $total = array_sum($values);
@@ -116,7 +119,7 @@ function generateGraph($type, $data) {
                     
                     // Section principale
                     imagefilledarc($image, $centerX, $centerY, $radius*2, $radius*2, 
-                                  $startAngle, $endAngle, $colors[$key], IMG_ARC_PIE);
+                                  (int)$startAngle, (int)$endAngle, $colors[$key], IMG_ARC_PIE);
                     
                     // Pour l'anneau
                     if ($type === 'ring') {
@@ -127,13 +130,14 @@ function generateGraph($type, $data) {
                     // Légende
                     $midAngle = ($startAngle + $endAngle) / 2;
                     $labelRadius = ($radius + $innerRadius) / 2;
-                    $labelX = $centerX + cos(deg2rad($midAngle)) * ($labelRadius + 30);
-                    $labelY = $centerY + sin(deg2rad($midAngle)) * ($labelRadius + 30);
+                    $labelX = (int)($centerX + cos(deg2rad($midAngle)) * ($labelRadius + 30));
+                    $labelY = (int)($centerY + sin(deg2rad($midAngle)) * ($labelRadius + 30));
                     
                     if (function_exists('imagettftext')) {
                         $text = sprintf("%s (%.1f%%)", $labels[$key], $value);
                         $textWidth = imagettfbbox(12, 0, $font, $text);
-                        imagettftext($image, 12, 0, $labelX - ($textWidth[4]/2), $labelY, $black, $font, $text);
+                        $textX = (int)($labelX - ($textWidth[4]/2));
+                        imagettftext($image, 12, 0, $textX, $labelY, $black, $font, $text);
                     }
                     
                     $startAngle = $endAngle;
@@ -159,7 +163,7 @@ function generateGraph($type, $data) {
                 
                 // Graduations
                 for ($i = 0; $i <= 100; $i += 20) {
-                    $y = $baseY - ($i / 100 * $maxHeight);
+                    $y = (int)($baseY - ($i / 100 * $maxHeight));
                     imageline($image, $startX - 5, $y, $startX, $y, $black);
                     if (function_exists('imagettftext')) {
                         imagettftext($image, 10, 0, $startX - 40, $y + 5, $black, $font, $i.'%');
@@ -173,8 +177,8 @@ function generateGraph($type, $data) {
                 
                 $points = [];
                 foreach ($pointValues as $index => $value) {
-                    $x = $startX + ($index * $step);
-                    $y = $baseY - ($value / 100 * $maxHeight);
+                    $x = (int)($startX + ($index * $step));
+                    $y = (int)($baseY - ($value / 100 * $maxHeight));
                     $points[] = ['x' => $x, 'y' => $y, 'value' => $value, 'color' => array_values($colors)[$index]];
                 }
                 
@@ -252,3 +256,4 @@ function generateGraph($type, $data) {
         return false;
     }
 }
+?>

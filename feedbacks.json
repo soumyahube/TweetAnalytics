@@ -145,5 +145,26 @@
         "comment": "I do not like it",
         "rating": 2,
         "date": "2025-06-17 02:58:36"
+    },
+    {
+        "name": "teste finale",
+        "email": "lalasoumya020@gmail.com",
+        "comment": "celui est le dernier teste avant de pusher sur git ",
+        "rating": 4,
+        "date": "2025-10-01 18:15:18"
+    },
+    {
+        "name": "teste finale",
+        "email": "lalasoumya020@gmail.com",
+        "comment": "celui est le dernier teste avant de pusher sur git ",
+        "rating": 4,
+        "date": "2025-10-01 18:18:07"
+    },
+    {
+        "name": "teste finale",
+        "email": "lalasoumya020@gmail.com",
+        "comment": "celui est le dernier teste avant de pusher sur git ",
+        "rating": 4,
+        "date": "2025-10-01 18:19:32"
     }
 ]

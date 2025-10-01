@@ -18,7 +18,7 @@ import sys
 
 # Chargement des deux fichiers CSV
 df_sentiment140 = pd.read_csv(
-    r'C:\Users\SOUMI\OneDrive\Bureau\xamp\htdocs\AppTweet\data\sentiment140_preprocessed.csv',
+    r'C:\wamp64\www\AppTweet\data\sentiment140_preprocessed.csv',
     skiprows=1,
     names=["sentiment", "text", "cleaned_text"],
     dtype={0: int},
@@ -26,8 +26,9 @@ df_sentiment140 = pd.read_csv(
 )
 
 df_neutre = pd.read_csv(
-      r'C:\Users\SOUMI\OneDrive\Bureau\xamp\htdocs\AppTweet\data\tweets_neutral1.csv',
-      names=["sentiment", "text", "cleaned_text"],skiprows=1)
+      r'C:\wamp64\www\AppTweet\data\tweets_neutral1.csv',
+      names=["sentiment", "text", "cleaned_text"],skiprows=1
+      )
 
 # Initialiser le traducteur
 
@@ -63,6 +64,8 @@ def detect_and_translate(user_input):
     try:
         # D'abord essayer de traduire la phrase complète
         try:
+
+            
             full_translation = GoogleTranslator(source='auto', target='en').translate(text)
             if full_translation and full_translation.lower() != text.lower():
                 return full_translation.lower()
@@ -589,7 +592,7 @@ def on_focusout(event):
             mot.insert(0, placeholder_texts[current_lang])
             mot.config(fg='grey')
 
-image = Image.open("C:\\Users\\SOUMI\\OneDrive\\Bureau\\xamp\\htdocs\\AppTweet\\images\\img.png")
+image = Image.open("C:\\wamp64\\www\\AppTweet\\images\\img.png")
 blurred_image = image.filter(ImageFilter.GaussianBlur(radius=3))
 photo = ImageTk.PhotoImage(blurred_image)
 label = Label(fen, image=photo)
@@ -682,7 +685,7 @@ keyboard_button.config(command=show_keyboard_menu_direct)
 
 
 texte_id = canvas.create_text(10, y_pos, text="", font=("Comic Sans MS", 18, "bold"), fill="Black", anchor=NW)
-img = Image.open("C:\\Users\\SOUMI\\OneDrive\\Bureau\\xamp\\htdocs\\AppTweet\\images\\111.jfif").resize((60, 60), Image.LANCZOS)
+img = Image.open("C:\\wamp64\\www\\AppTweet\\images\\111.jfif").resize((60, 60), Image.LANCZOS)
 oiseau_img = ImageTk.PhotoImage(img)
 oiseau_id = canvas.create_image(x_pos, y_pos, image=oiseau_img, anchor=NW)
 mot.bind("<FocusIn>", on_entry_click)  # Appeler on_entry_click lors du focus

@@ -1,21 +1,21 @@
 {
-  "search_term": "happy",
-  "translated_term": "happy",
-  "total_tweets": 26164,
-  "date_analysis": "2025-06-20",
+  "search_term": "girl",
+  "translated_term": "girl",
+  "total_tweets": 15477,
+  "date_analysis": "2025-10-01",
   "sentiment_distribution": {
-    "positive": 75.67,
+    "positive": 58.87,
     "neutral": 0.0,
-    "negative": 24.33
+    "negative": 41.13
   },
   "top_tweets": {
     "positive": [
-      "crazy day of school. there for 10 hours straiiight. about to watch the hills. @spencerpratt told me too! ha. happy birthday JB! ",
-      "happy to spend time with the family. "
+      "im meeting up with one of my besties tonight! Cant wait!!  - GIRL TALK!!",
+      "What A Day  I Just Loved It. Sun, Food And My Girls  Cannot Be Beaten. Eyyy! I Bused It Home Tooo Hahaa. Have An Ace Time Darl.  xxxx"
     ],
     "negative": [
-      "@Viennah Yay! I'm happy for you with your job! But that also means less time for me and you... ",
-      "I'm missing you babe..  but as long as your alive I'm happy.. Yawwwnn.. I'm tired my love imma try to sleep hopefully you had a headstart"
+      "Falling asleep. Just heard about that Tracy girl's body being found. How sad  My heart breaks for that family.",
+      "Gym attire today was: Puma singlet, Adidas shorts.......and black business socks and leather shoes  Lucky did not run into any cute girls."
     ],
     "neutre": []
   }
